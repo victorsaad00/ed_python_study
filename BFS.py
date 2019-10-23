@@ -5,7 +5,6 @@ def BFS(graph, queue, visited, v, path):
     path.append(vert)
 
     for adj in graph[vert]:
-
         if visited[adj-1] is False:
 
             queue.append(adj)

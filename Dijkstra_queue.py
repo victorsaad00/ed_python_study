@@ -52,26 +52,32 @@ class Queue:
     def isEmpty(self):
         return self.size == 0
 
-def dijkstra(graph, orig):
+def dijkstra(graph, orig_vert, len_dist):
 
-    len_dist = len_list(graph)
-    distance = [float('inf')] * len_dist
-    distance[orig-1] = 0
+    # The index is the vertice and the values are the distances.
+    # distance = [0, inf, inf, ... , inf] if orig_vert is equal to first vertice. 
+    distance = [float('inf')] * len_dist 
+    distance[orig_vert-1] = 0  
     
     q = Queue()
-    q.inqueue((orig, distance[orig-1]))
+    # Queue a tuple, (vertice, distance of that vertice). 
+    q.inqueue((orig_vert, distance[orig_vert-1])) 
 
     while not q.isEmpty():
-        t = q.dequeue()
+        # deQueue a tuple = (vertice, distance)
+        t = q.dequeue() 
         vertice = t[0] 
-        #min_distance = t[1]
+        min_vertice_distance = t[1]
 
-        for v in graph[vertice-1]:
-            vert = v[0]
-            vert_dist = v[1]
+        if min_vertice_distance == distance[vertice-1]:
+                
+            # v is every adjacent of vertice.
+            for v in graph[vertice-1]:
+                vert = v[0]
+                vert_dist = v[1]
 
-            if distance[vertice-1] + vert_dist < distance[vert-1]:
-                distance[vert-1] = distance[vertice-1] + vert_dist
-                q.inqueue((vert, distance[vert-1]))
-        
+                if distance[vertice-1] + vert_dist < distance[vert-1]:
+                    distance[vert-1] = distance[vertice-1] + vert_dist
+                    q.inqueue((vert, distance[vert-1]))
+
     return distance
